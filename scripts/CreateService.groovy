@@ -34,6 +34,13 @@ target ('default': "Creates a new service class") {
     promptForName(type: type)
 
     def name = argsMap["params"][0]
+
+    if (name =~ /.+Service$/) {
+        if (confirmInput("Did you mean '${name}' instead of '${name}Service'?")) {
+            name = name.replaceAll(/Service$/,"")
+        }
+    }
+
 	createArtifact(name: name, suffix: type, type: type, path: "grails-app/services")
 	createUnitTest(name: name, suffix: type)
 }
