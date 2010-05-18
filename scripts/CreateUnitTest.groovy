@@ -31,5 +31,12 @@ target ('default': "Creates a new Grails unit test. A unit test requires that yo
     promptForName(type: "Unit test")
 
     def name = argsMap["params"][0]
+
+    if (name =~ /.+Tests$/) {
+        if (confirmInput("Did you mean '${name}' instead of '${name}Tests'?")) {
+            name = name.replaceAll(/Tests$/,"")
+        }
+    }
+
     createUnitTest(name: name, suffix: "")
 }                            

@@ -31,5 +31,12 @@ target ('default': "Creates a new Grails integration test which loads the whole 
     promptForName(type: "Integration test")
 
     def name = argsMap["params"][0]
+
+    if (name =~ /.+Tests$/) {
+        if (confirmInput("Did you mean '${name}' instead of '${name}Tests'?")) {
+            name = name.replaceAll(/Tests$/,"")
+        }
+    }
+    
     createIntegrationTest(name: name, suffix: "")
 }                            
