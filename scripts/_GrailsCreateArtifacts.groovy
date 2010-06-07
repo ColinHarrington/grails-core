@@ -123,3 +123,15 @@ promptForName = { Map args = [:] ->
         argsMap["params"] << ant.antProject.properties."artifact.name"
     }
 }
+
+purgeRedundantArtifactSuffix = { Map args = [:] ->
+    def name = args["name"]
+    def suffix = args["suffix"]
+    
+    if (name && suffix) {
+        if (name =~ /.+$suffix$/) {
+            name = name.replaceAll(/$suffix$/, "")
+        }
+    }
+    name
+}
